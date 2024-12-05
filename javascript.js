@@ -8,6 +8,15 @@ let draggedButton = null;
 let gameActive = false; 
 let highScore = Infinity; 
 
+// Helper to calculate row and column of a button
+function getButtonPosition(button) {
+    const parent = document.getElementById("button-container");
+    const children = Array.from(parent.children);
+    const index = children.indexOf(button);
+    const row = Math.floor(index / 3); // 3 columns
+    const col = index % 3;
+    return { row, col };
+}
 
 function shuffleButtons() {
     const parent = document.getElementById("button-container");
@@ -19,7 +28,6 @@ function shuffleButtons() {
     gameActive = true; 
 }
 
-
 function checkOrder() {
     const currentOrder = Array.from(document.getElementById("button-container").children).map(
         button => button.textContent
@@ -27,7 +35,6 @@ function checkOrder() {
     const correctOrder = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     return currentOrder.every((value, index) => value === correctOrder[index]);
 }
-
 
 buttons.forEach(button => {
     button.addEventListener("dragstart", event => {
@@ -48,8 +55,15 @@ buttons.forEach(button => {
         event.preventDefault();
         const targetButton = event.target;
 
-        
-        if (draggedButton !== targetButton) {
+        // Ensure the move is not diagonal
+        const draggedPos = getButtonPosition(draggedButton);
+        const targetPos = getButtonPosition(targetButton);
+
+        const isSameRow = draggedPos.row === targetPos.row;
+        const isSameCol = draggedPos.col === targetPos.col;
+
+        if (draggedButton !== targetButton && (isSameRow || isSameCol)) {
+            // Swap button content
             const draggedButtonContent = draggedButton.innerHTML;
             const targetButtonContent = targetButton.innerHTML;
 
@@ -71,6 +85,8 @@ buttons.forEach(button => {
 
                 gameActive = false; 
             }
+        } else {
+            textArea.value = `Invalid move!`;
         }
     });
 });
@@ -85,7 +101,6 @@ resetButton.addEventListener("click", () => {
     gameActive = false; 
 });
 
-
 window.onload = () => {
     const popupOverlay = document.getElementById("popup-overlay");
     const closePopupButton = document.getElementById("close-popup");
@@ -97,4 +112,3 @@ window.onload = () => {
         textArea.value = "Press the start button to begin!";
     });
 };
-

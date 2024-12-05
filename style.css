@@ -1,3 +1,16 @@
+body {
+    background-image: url('bg2.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center;
+    height: 100vh; /* Ensures the body takes the full viewport height */
+    display: flex; /* Makes the body a flex container */
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    margin: 0; /* Removes default margin */
+    overflow: hidden; /* Prevents scrollbars from appearing unnecessarily */
+}
+
 .flex-container {
     display: flex;
     flex-direction: column;
@@ -5,12 +18,13 @@
     gap: 20px;
     max-width: 300px;
     max-height: 650px;
-    margin: auto;
     padding: 20px;
     border: 2px solid black;
     border-radius: 15px 15px 50px 5px;
     background-color: rgb(202, 201, 195);
+    z-index: 900;
 }
+
 
 #button-container {
     display: grid;
@@ -61,12 +75,7 @@ textarea.text {
     background-color: rgb(41, 240, 34);
     font-family: monospace;
 }
-body {
-    background-image: url('bg2.png'); 
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-position: center;
-}
+
 
 #popup-overlay {
     position: fixed;
@@ -112,4 +121,3 @@ body {
 #close-popup:hover {
     background-color: green;
 }
-
